@@ -2,21 +2,87 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.library</groupId>
-    <artifactId>LibraryRegistration</artifactId>
-    
+  <modelVersion>4.0.0</modelVersion>
 
-    <dependencies>
-        <!-- JSP API -->
-        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>javax.servlet.jsp-api</artifactId>
-            <version>2.3.3</version>
-            <scope>provided</scope>
-        </dependency>
+  <!-- Change groupId/artifactId if you'd prefer them to match the repo or organization -->
+  <groupId>com.library</groupId>
+  <artifactId>LibraryRegistration</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
 
-       <build>
-        <finalName>LibraryRegistration</finalName>
-    </build>
+  <name>LibraryRegistration</name>
+  <description>Library registration web application</description>
+  <url>https://github.com/adityardy05/original_cse</url>
+
+  <properties>
+    <!-- Set the Java version your project targets (change to 11 if needed) -->
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- Optional: make plugin versions explicit -->
+    <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
+    <maven.war.plugin.version>3.3.2</maven.war.plugin.version>
+  </properties>
+
+  <dependencies>
+    <!-- Servlet API (provided by the container) -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- JSP API (provided by the container) -->
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>javax.servlet.jsp-api</artifactId>
+      <version>2.3.3</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- JSTL -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+
+    <!-- Example: add other runtime deps here (e.g., JDBC driver), e.g.
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.34</version>
+    </dependency>
+    -->
+  </dependencies>
+
+  <build>
+    <finalName>LibraryRegistration</finalName>
+
+    <plugins>
+      <!-- Compiler plugin: honors the source/target properties above -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven.compiler.plugin.version}</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
+
+      <!-- WAR plugin: ensure packaging behavior is sane for servlet apps -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>${maven.war.plugin.version}</version>
+        <configuration>
+          <!-- don't require a web.xml for Servlet 3.0+ apps -->
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
