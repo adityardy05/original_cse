@@ -1,0 +1,29 @@
+services:
+  web:
+    image: nginx:latest
+    container_name: apartment-web
+    ports:
+      - "8089:80"
+    depends_on:
+      - db
+    networks:
+      - apartment-net
+
+  db:
+    image: postgres:15
+    container_name: apartment-db
+    environment:
+      POSTGRES_DB: apartmentdb
+      POSTGRES_USER: aptuser
+      POSTGRES_PASSWORD: pass123
+    volumes:
+      - apartment-data:/var/lib/postgresql/data
+    networks:
+      - apartment-net
+
+networks:
+  apartment-net:
+    driver: bridge
+
+volumes:
+  apartment-data:
