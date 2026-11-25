@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: eticketing
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: eticketing
+
+  template:
+    metadata:
+      labels:
+        app: eticketing
+
+    spec:
+      containers:
+      - name: eticketing
+        image: nginx
+        ports:
+        - containerPort: 80
