@@ -1,0 +1,37 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: eticket-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: eticketing
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass123
+    volumes:
+      - eticket-db-data:/var/lib/mysql
+    networks:
+      - eticket-net
+
+  wordpress:
+    image: wordpress:latest
+    container_name: eticket-wordpress
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "8081:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: user
+      WORDPRESS_DB_PASSWORD: pass123
+      WORDPRESS_DB_NAME: eticketing
+    networks:
+      - eticket-net
+
+networks:
+  eticket-net:
+    driver: bridge
+
+volumes:
+  eticket-db-data:
