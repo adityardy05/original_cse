@@ -1,0 +1,39 @@
+services:
+  web:
+    build: ./web
+    container_name: sports-web
+    ports:
+      - "5000:5000"
+    environment:
+      DATABASE_URL: postgresql://sportsuser:pass123@db:5432/sportsdb
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - db
+      - redis
+    networks:
+      - sports-net
+
+  db:
+    image: postgres:15
+    container_name: sports-db
+    environment:
+      POSTGRES_DB: sportsdb
+      POSTGRES_USER: sportsuser
+      POSTGRES_PASSWORD: pass123
+    volumes:
+      - sports-db-data:/var/lib/postgresql/data
+    networks:
+      - sports-net
+
+  redis:
+    image: redis:7
+    container_name: sports-redis
+    networks:
+      - sports-net
+
+networks:
+  sports-net:
+    driver: bridge
+
+volumes:
+  sports-db-data:
