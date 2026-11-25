@@ -1,19 +1,16 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
+
 metadata:
-  name: eticketing
+  name: eticketing-service
+
 spec:
-  replicas: 2
+  type: NodePort
+
   selector:
-    matchLabels:
-      app: eticketing
-  template:
-    metadata:
-      labels:
-        app: eticketing
-    spec:
-      containers:
-      - name: eticketing
-        image: adityareddya/eticketing:v1
-        ports:
-        - containerPort: 8080
+    app: eticketing
+
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 30080
